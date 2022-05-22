@@ -81,3 +81,4 @@ int count_digit(int i)
 		d++;
 	}
 	return (d);
+}
