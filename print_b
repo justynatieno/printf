@@ -1,37 +1,30 @@
 #include "main.h"
 
 /**
- * print_c - prints a character to the standard output.
- *
- * @ap: The argument parameter
- *
- * Return: Returns the number of characters to be printed.
- */
-int print_c(va_list ap)
+ * get_precision - gets the precision from the format string
+ * @s: the format string
+ * @params: the parameters struct
+ * @ap: the argument pointer
+ * Return: new pointer
+*/
+
+char *get_precision(char *s, params_t *params, va_list ap)
 {
-	return (_putchar(va_arg(ap, int)));
-}
+	int d = 0;
 
-/**
- * print_s - prints the string to the standard output
- *
- * @ap: The argument parameter
- *
- * Return: Returns the number of characters to be printed.
- */
-
-int print_s(va_list ap)
-{
-	int index = 0;
-
-	const char *str =  va_arg(ap, const char *);
-
-	if (str == NULL)
-		str = "(null)";
-	else if (*str == '\0')
-		return (-1);
-	for (; str[index]; index++)
-		_putchar(str[index]);
-
-	return (index);
+	if (*s != '.')
+		return (s);
+	s++;
+	if (*s == '*')
+	{
+		d = va_arg(ap, int);
+		s++;
+	}
+	else
+	{
+		while (_isdigit(*s))
+			d = d * 10 + (*s++ - '0');
+	}
+	params->precision = d;
+	return (s);
 }
